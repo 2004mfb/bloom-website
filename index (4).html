@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom | AI Academic Advising</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0d1e2d;
+            --bloom-green: #7ed957;
+            --bloom-green-light: #a8e87c;
+            --bloom-green-dark: #5cb840;
+            --soft-white: #f8faf9;
+            --muted-text: #8a9ba8;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(126, 217, 87, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--deep-blue);
+            color: var(--soft-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(126, 217, 87, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(126, 217, 87, 0.05) 0%, transparent 40%),
+                radial-gradient(ellipse 50% 30% at 50% 80%, rgba(126, 217, 87, 0.06) 0%, transparent 45%),
+                var(--deep-blue);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, var(--deep-blue) 0%, transparent 100%);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo span {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--soft-white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--muted-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--bloom-green);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 4rem 4rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            color: var(--soft-white);
+        }
+
+        .hero h1 span {
+            color: var(--bloom-green);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--muted-text);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--bloom-green);
+            color: var(--deep-blue);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(126, 217, 87, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--bloom-green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(126, 217, 87, 0.4);
+        }
+
+        section {
+            padding: 6rem 4rem;
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--muted-text);
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Problem Section */
+        .problem {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .problem-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .problem-stat {
+            font-family: 'Fraunces', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--bloom-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-label {
+            color: var(--muted-text);
+            font-size: 0.95rem;
+        }
+
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--bloom-green);
+            color: var(--deep-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step p {
+            color: var(--muted-text);
+            font-size: 0.95rem;
+        }
+
+        /* Founder Section */
+        .founder {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .founder-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .founder-image {
+            flex-shrink: 0;
+        }
+
+        .founder-image img {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bloom-green);
+            box-shadow: 0 10px 40px rgba(126, 217, 87, 0.2);
+        }
+
+        .founder-text h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .founder-text .title {
+            color: var(--bloom-green);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .founder-text p {
+            color: var(--muted-text);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 8rem 4rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--muted-text);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--card-border);
+            color: var(--muted-text);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .problem-grid,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .founder-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .founder-image img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <nav>
+        <div class="logo">
+            <span>🌱 Bloom</span>
+        </div>
+        <div class="nav-links">
+            <a href="#problem">The Problem</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#founder">Founder</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bloom helps college students navigate their path to <span>graduation</span></h1>
+            <p>An AI-powered academic advising platform that analyzes your transcript, identifies remaining requirements, builds a semester-by-semester plan, and surfaces scholarships and internships—filling the gap left by overworked advisors.</p>
+            <a href="#contact" class="cta-button">Get Early Access</a>
+        </div>
+    </section>
+
+    <section class="problem" id="problem">
+        <h2 class="section-title">Academic Advising is Broken</h2>
+        <p class="section-subtitle">Students are falling through the cracks because the system wasn't built to support them.</p>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-stat">7 in 10</div>
+                <div class="problem-label">Faculty advisors never sit down with students to review their curriculum</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-stat">$500K+</div>
+                <div class="problem-label">Cost for institutions to fix advising with legacy systems</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-stat">150-200</div>
+                <div class="problem-label">Students per advisor at many universities</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <h2 class="section-title">How Bloom Works</h2>
+        <p class="section-subtitle">Simple, fast, and built for students.</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Upload Your Documents</h3>
+                <p>Share your transcript and curriculum guide. PDF or paste—either works.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Get Your Analysis</h3>
+                <p>Bloom identifies completed courses, remaining requirements, and credits needed to graduate.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Plan Your Path</h3>
+                <p>Receive a semester-by-semester plan plus relevant scholarships and internship opportunities.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="founder" id="founder">
+        <h2 class="section-title">Meet the Founder</h2>
+        <div class="founder-content">
+            <div class="founder-image">
+                <img src="headshot.jpg" alt="Malcolm - Founder of Bloom">
+            </div>
+            <div class="founder-text">
+                <h3>Malcolm</h3>
+                <div class="title">Founder & CEO</div>
+                <p>Bloom started as a math education tool, but a single conversation with a dean at NC A&T changed everything. He told me advising was broken—students get a registration PIN and no real direction.</p>
+                <p>Within 48 hours, I scrapped months of work and rebuilt. I'm a senior at NC A&T studying Business Administration with a Finance minor, and I've experienced this broken system firsthand. Bloom is my answer to fixing it.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <h2>Ready to Graduate on Time?</h2>
+        <p>We're piloting with students at NC A&T this spring.</p>
+        <a href="mailto:hello@bloomadvisor.com" class="cta-button">Get in Touch</a>
+    </section>
+
+    <footer>
+        <p>© 2026 Bloom. Built for students, by a student.</p>
+    </footer>
+</body>
+</html>
